@@ -1,6 +1,4 @@
-
 module Oj
-  
   def self.mimic_loaded(mimic_paths=[])
     gems_dir = File.dirname(File.dirname(File.dirname(File.dirname(__FILE__))))
     Dir.foreach(gems_dir) do |gem|
@@ -10,9 +8,9 @@ module Oj
     # and another approach in case the first did not get all
     $LOAD_PATH.each do |d|
       next unless File.exist?(d)
-      Dir.entries(d) do |file|
-        next unless file.ends_with?('jsob.rb')
-        $LOADED_FEATURES << file unless $LOADED_FEATURES.include?(file)
+      Dir.entries(d).each do |file|
+        next unless file.end_with?('json.rb')
+        $LOADED_FEATURES << File.join(d, file) unless $LOADED_FEATURES.include?(file)
       end
     end
     mimic_paths.each { |p| $LOADED_FEATURES << p }
